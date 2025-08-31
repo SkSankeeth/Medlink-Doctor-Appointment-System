@@ -29,6 +29,7 @@ const DoctorDetails = () => {
             
             if (response.data.success) {
                 console.log('Doctor data received:', response.data.data);
+                console.log('Doctor ticket price:', response.data.data.ticketPrice);
                 console.log('Reviews count:', response.data.data.reviews?.length || 0);
                 setDoctor(response.data.data);
             } else {
@@ -163,6 +164,15 @@ const DoctorDetails = () => {
                         <img src={doctor.photo} alt={`${doctor.name} profile`} className="w-48 h-48 rounded-full object-cover border-4 border-primaryColor" />
                         <h2 className="text-2xl font-bold mt-4 text-headingColor">{doctor.name}</h2>
                         <p className="text-primaryColor text-xl mt-1 font-semibold">{doctor.specialization}</p>
+                        
+                        {/* Doctor Fee Display */}
+                        <div className="mt-4 text-center">
+                            <div className="bg-primaryColor text-white px-6 py-3 rounded-lg">
+                                <p className="text-sm font-medium">Consultation Fee</p>
+                                <p className="text-2xl font-bold">₹{doctor.ticketPrice || 'N/A'}</p>
+                            </div>
+                        </div>
+                        
                         <div className="mt-4 text-center text-textColor">
                             <h4 className="font-semibold text-lg">About</h4>
                             <p className="mt-2">{doctor.about}</p>
@@ -209,6 +219,14 @@ const DoctorDetails = () => {
                                         <p className="text-textColor">No time slots available for this doctor.</p>
                                     )}
                                 </div>
+                            </div>
+                        </div>
+
+                        {/* Fee Display Above Booking */}
+                        <div className="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div className="flex items-center justify-between">
+                                <span className="text-lg font-semibold text-headingColor">Consultation Fee:</span>
+                                <span className="text-2xl font-bold text-primaryColor">₹{doctor.ticketPrice || 'N/A'}</span>
                             </div>
                         </div>
 

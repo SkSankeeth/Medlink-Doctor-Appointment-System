@@ -41,8 +41,14 @@ const DoctorSchema = new mongoose.Schema({
         trim: true
     },
     qualifications: [{
-        type: String,
-        trim: true
+        degree: {
+            type: String,
+            trim: true
+        },
+        university: {
+            type: String,
+            trim: true
+        }
     }],
     experiences: [{
         startingDate: {

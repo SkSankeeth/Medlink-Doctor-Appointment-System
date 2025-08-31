@@ -66,13 +66,38 @@ const DoctorProfile = () => {
             dataToSubmit.append('specialization', formData.specialization);
             dataToSubmit.append('ticketPrice', formData.ticketPrice);
             dataToSubmit.append('about', formData.about);
-            dataToSubmit.append('qualifications', JSON.stringify(formData.qualifications.filter(q => q.degree && q.university)));
-            dataToSubmit.append('experiences', JSON.stringify(formData.experiences.filter(e => e.startingDate && e.endingDate && e.position)));
-            dataToSubmit.append('timeSlots', JSON.stringify(formData.timeSlots.filter(t => t.day && t.startingTime && t.endingTime)));
+            
+            // Fix qualifications filtering - only filter out completely empty objects
+            const validQualifications = formData.qualifications.filter(q => 
+                q.degree && q.degree.trim() && q.university && q.university.trim()
+            );
+            dataToSubmit.append('qualifications', JSON.stringify(validQualifications));
+            
+            // Fix experiences filtering
+            const validExperiences = formData.experiences.filter(e => 
+                e.startingDate && e.endingDate && e.position && e.position.trim()
+            );
+            dataToSubmit.append('experiences', JSON.stringify(validExperiences));
+            
+            // Fix timeSlots filtering
+            const validTimeSlots = formData.timeSlots.filter(t => 
+                t.day && t.startingTime && t.endingTime
+            );
+            dataToSubmit.append('timeSlots', JSON.stringify(validTimeSlots));
 
             if (selectedFile) {
                 dataToSubmit.append('photo', selectedFile);
             }
+
+            // Add debugging
+            console.log('Sending data:', {
+                name: formData.name,
+                specialization: formData.specialization,
+                ticketPrice: formData.ticketPrice,
+                qualifications: validQualifications,
+                experiences: validExperiences,
+                timeSlots: validTimeSlots
+            });
 
             const response = await axios.put(`${BASE_URL}/doctors/${user._id}`, dataToSubmit, {
                 headers: {

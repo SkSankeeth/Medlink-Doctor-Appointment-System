@@ -12,36 +12,76 @@ export const updateDoctor = async (req, res) => {
     const id = req.params.id;
     
     try {
+        console.log('Update doctor request body:', req.body);
+        
         // Handle FormData fields
         const updates = {
             name: req.body.name,
             specialization: req.body.specialization,
-            ticketPrice: req.body.ticketPrice,
             about: req.body.about
         };
 
-        // Parse JSON fields if they exist
+        // Validate and convert ticketPrice to number
+        if (req.body.ticketPrice !== undefined) {
+            const ticketPrice = parseFloat(req.body.ticketPrice);
+            if (isNaN(ticketPrice) || ticketPrice < 0) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'Ticket price must be a valid positive number' 
+                });
+            }
+            updates.ticketPrice = ticketPrice;
+        }
+
+        // Parse JSON fields if they exist with better error handling
         if (req.body.qualifications) {
             try {
-                updates.qualifications = JSON.parse(req.body.qualifications);
+                const qualifications = JSON.parse(req.body.qualifications);
+                if (Array.isArray(qualifications)) {
+                    updates.qualifications = qualifications.filter(q => 
+                        q && q.degree && q.degree.trim() && q.university && q.university.trim()
+                    );
+                } else {
+                    console.warn('Qualifications is not an array:', qualifications);
+                    updates.qualifications = [];
+                }
             } catch (e) {
-                console.error('Error parsing qualifications:', e);
+                console.error('Error parsing qualifications:', e, 'Raw data:', req.body.qualifications);
+                updates.qualifications = [];
             }
         }
 
         if (req.body.experiences) {
             try {
-                updates.experiences = JSON.parse(req.body.experiences);
+                const experiences = JSON.parse(req.body.experiences);
+                if (Array.isArray(experiences)) {
+                    updates.experiences = experiences.filter(e => 
+                        e && e.startingDate && e.endingDate && e.position && e.position.trim()
+                    );
+                } else {
+                    console.warn('Experiences is not an array:', experiences);
+                    updates.experiences = [];
+                }
             } catch (e) {
-                console.error('Error parsing experiences:', e);
+                console.error('Error parsing experiences:', e, 'Raw data:', req.body.experiences);
+                updates.experiences = [];
             }
         }
 
         if (req.body.timeSlots) {
             try {
-                updates.timeSlots = JSON.parse(req.body.timeSlots);
+                const timeSlots = JSON.parse(req.body.timeSlots);
+                if (Array.isArray(timeSlots)) {
+                    updates.timeSlots = timeSlots.filter(t => 
+                        t && t.day && t.startingTime && t.endingTime
+                    );
+                } else {
+                    console.warn('TimeSlots is not an array:', timeSlots);
+                    updates.timeSlots = [];
+                }
             } catch (e) {
-                console.error('Error parsing timeSlots:', e);
+                console.error('Error parsing timeSlots:', e, 'Raw data:', req.body.timeSlots);
+                updates.timeSlots = [];
             }
         }
 
@@ -49,6 +89,8 @@ export const updateDoctor = async (req, res) => {
         if (req.file) {
             updates.photo = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
         }
+
+        console.log('Final updates object:', updates);
 
         const updatedDoctor = await Doctor.findByIdAndUpdate(id, { $set: updates }, { new: true });
         if (!updatedDoctor) {
@@ -146,7 +188,10 @@ export const getSingleDoctor = async (req, res) => {
         console.log('Fetched doctor with reviews:', { 
             doctorId: id, 
             totalReviews: doctor.reviews?.length || 0,
-            averageRating: doctor.averageRating || 0
+            averageRating: doctor.averageRating || 0,
+            ticketPrice: doctor.ticketPrice,
+            qualifications: doctor.qualifications,
+            experiences: doctor.experiences
         });
         
         res.status(200).json({

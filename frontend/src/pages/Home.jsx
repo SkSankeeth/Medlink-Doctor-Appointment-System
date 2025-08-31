@@ -423,69 +423,7 @@ const Home = () => {
             </button>
         </div>
         
-        {/* Enhanced Footer Section */}
-        <section className="py-16 bg-gradient-to-br from-gray-900 to-gray-800 text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-800/50 to-gray-900/50"></div>
-            <div className="absolute top-10 left-10 w-24 h-24 bg-blue-500 rounded-full opacity-5 blur-2xl"></div>
-            <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500 rounded-full opacity-5 blur-2xl"></div>
-            
-            <div className="container relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div className="text-center md:text-left">
-                        <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Quick Links</h3>
-                        <ul className="space-y-2">
-                            <li><a href="/doctors" className="hover:text-blue-400 transition-colors duration-300">Find Doctors</a></li>
-                            <li><a href="/services" className="hover:text-blue-400 transition-colors duration-300">Our Services</a></li>
-                            <li><a href="/contact" className="hover:text-blue-400 transition-colors duration-300">Contact Us</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div className="text-center md:text-left">
-                        <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">Services</h3>
-                        <ul className="space-y-2">
-                            <li><a href="#" className="hover:text-green-400 transition-colors duration-300">Emergency Care</a></li>
-                            <li><a href="#" className="hover:text-green-400 transition-colors duration-300">Virtual Consultation</a></li>
-                            <li><a href="#" className="hover:text-green-400 transition-colors duration-300">Specialized Treatment</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div className="text-center md:text-left">
-                        <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Support</h3>
-                        <ul className="space-y-2">
-                            <li><a href="#" className="hover:text-purple-400 transition-colors duration-300">Help Center</a></li>
-                            <li><a href="#" className="hover:text-purple-400 transition-colors duration-300">Patient Portal</a></li>
-                            <li><a href="#" className="hover:text-purple-400 transition-colors duration-300">Insurance Info</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div className="text-center md:text-left">
-                        <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">Contact Info</h3>
-                        <div className="space-y-2">
-                            <p className="flex items-center justify-center md:justify-start gap-2">
-                                <span>📞</span>
-                                <span>+1 (555) 123-4567</span>
-                            </p>
-                            <p className="flex items-center justify-center md:justify-start gap-2">
-                                <span>📧</span>
-                                <span>info@healthcare.com</span>
-                            </p>
-                            <p className="flex items-center justify-center md:justify-start gap-2">
-                                <span>📍</span>
-                                <span>123 Medical Center Dr</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-                    <p className="text-gray-400">
-                        © 2024 Healthcare System. All rights reserved. | 
-                        <a href="#" className="text-blue-400 hover:text-blue-300 ml-2 transition-colors duration-300">Privacy Policy</a> | 
-                        <a href="#" className="text-blue-400 hover:text-blue-300 ml-2 transition-colors duration-300">Terms of Service</a>
-                    </p>
-                </div>
-            </div>
-        </section>
+        
     </>;
 };
 

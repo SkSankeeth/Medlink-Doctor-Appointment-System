@@ -6,6 +6,10 @@ import { BASE_URL } from '../../config.js';
 const DoctorCard = ({ doctor }) => {
   const { name, avgRating, specialization, totalRating, photo } = doctor;
 
+  // Debug logging
+  console.log('DoctorCard data:', doctor);
+  console.log('Doctor ticket price:', doctor.ticketPrice);
+
   return (
     <div className="p-3 lg:p-5 rounded-lg shadow-md">
       <div>
@@ -32,6 +36,13 @@ const DoctorCard = ({ doctor }) => {
           <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
             ({totalRating})
           </span>
+        </div>
+      </div>
+
+      {/* Doctor Fee Display */}
+      <div className="mt-3 lg:mt-4 text-center">
+        <div className="bg-primaryColor text-white px-4 py-2 rounded-lg">
+          <p className="text-xs lg:text-sm font-medium">Fee: ₹{doctor.ticketPrice || 'N/A'}</p>
         </div>
       </div>
 
