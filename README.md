@@ -70,17 +70,7 @@ A full-stack web application for booking doctor appointments, built with React.j
    JWT_SECRET=your_jwt_secret
    PORT=5000
    ```
-
-## 👥 Team Members
-
-This project is developed by:
-- [Your Name] - [Role]
-- [Team Member 2] - [Role]
-- [Team Member 3] - [Role]
-- [Team Member 4] - [Role]
-- [Team Member 5] - [Role]
-- [Team Member 6] - [Role]
-
+   
 ## 📝 API Endpoints
 
 ### Authentication
@@ -120,8 +110,7 @@ This project is licensed under the MIT License.
 
 ## 📞 Contact
 
-For any queries, please contact the development team.
+For any queries, please contact
+sankeethsithamparanathan@gmail.com
 
 ---
-
-**Note**: This is a university group project for demonstration and educational purposes.
