@@ -19,7 +19,25 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
-    origin: true
+    origin: (origin, callback) => {
+        // Allow localhost on any port (5173, 5174, 5175, etc.)
+        const allowedOrigins = [
+            'http://localhost:5173',
+            'http://localhost:5174',
+            'http://localhost:5175',
+            'http://localhost:3000',
+            process.env.FRONTEND_URL
+        ];
+        
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS not allowed'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 // Get the directory name for static file serving

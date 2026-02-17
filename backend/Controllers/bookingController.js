@@ -39,7 +39,7 @@ export const getCheckoutSession = async (req, res) => {
             user: req.userId,
             ticketPrice: doctor.ticketPrice,
             session: session.id,
-            appointmentDate: new Date(), // This should be dynamic
+            appointmentDate: req.body.appointmentDate ? new Date(req.body.appointmentDate) : new Date(),
             isPaid: false // Stripe webhook will update this
         });
 

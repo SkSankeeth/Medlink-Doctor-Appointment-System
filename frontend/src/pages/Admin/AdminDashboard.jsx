@@ -133,6 +133,22 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleApproveDoctor = async (doctorId, status) => {
+        try {
+            await axios.put(`${BASE_URL}/admin/doctors/${doctorId}/approve`, {
+                status: status
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            toast.success(`Doctor ${status} successfully`);
+            fetchDashboardData(); // Refresh data
+        } catch (error) {
+            console.error('Error updating doctor status:', error);
+            toast.error('Failed to update doctor status');
+        }
+    };
+
     const filteredAppointments = appointments.filter(app => {
         const matchesSearch = app.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                              app.doctor?.name?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -410,12 +426,31 @@ const AdminDashboard = () => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{doctor.appointments?.length || 0}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                        <button className="text-blue-600 hover:text-blue-900 mr-3">
-                                                            <FaEye className="h-4 w-4" />
-                                                        </button>
-                                                        <button className="text-green-600 hover:text-green-900 mr-3">
-                                                            <FaEdit className="h-4 w-4" />
-                                                        </button>
+                                                        <span className={`inline-block px-2 py-1 mr-2 rounded text-xs font-medium ${
+                                                            doctor.isApproved === 'approved' ? 'bg-green-100 text-green-800' :
+                                                            doctor.isApproved === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                                            'bg-red-100 text-red-800'
+                                                        }`}>
+                                                            {doctor.isApproved || 'pending'}
+                                                        </span>
+                                                        {doctor.isApproved === 'pending' && (
+                                                            <>
+                                                                <button 
+                                                                    className="text-green-600 hover:text-green-900 mr-2"
+                                                                    onClick={() => handleApproveDoctor(doctor._id, 'approved')}
+                                                                    title="Approve"
+                                                                >
+                                                                    <FaCheckCircle className="h-4 w-4" />
+                                                                </button>
+                                                                <button 
+                                                                    className="text-yellow-600 hover:text-yellow-900 mr-2"
+                                                                    onClick={() => handleApproveDoctor(doctor._id, 'cancelled')}
+                                                                    title="Reject"
+                                                                >
+                                                                    <FaTimesCircle className="h-4 w-4" />
+                                                                </button>
+                                                            </>
+                                                        )}
                                                         <button className="text-red-600 hover:text-red-900" onClick={() => handleDeleteUser(doctor._id, 'doctor')}>
                                                             <FaTrash className="h-4 w-4" />
                                                         </button>

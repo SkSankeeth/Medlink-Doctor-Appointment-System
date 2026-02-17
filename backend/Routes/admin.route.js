@@ -8,6 +8,7 @@ import {
     updateAppointmentStatus,
     deleteAdminUser,
     deleteAdminDoctor,
+    approveDoctor,
     getDashboardStats,
     createAdminUser
 } from '../Controllers/adminController.js';
@@ -54,6 +55,7 @@ router.delete('/users/:id', deleteAdminUser);
 
 // Doctor management
 router.get('/doctors', getAdminDoctors);
+router.put('/doctors/:id/approve', approveDoctor);
 router.delete('/doctors/:id', deleteAdminDoctor);
 
 // Appointment management

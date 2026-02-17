@@ -77,6 +77,14 @@ export const createAppointment = async (req, res) => {
             return res.status(404).json({ success: false, message: "Doctor not found" });
         }
 
+        // Check if doctor is approved
+        if (doctor.isApproved !== 'approved') {
+            return res.status(403).json({ 
+                success: false, 
+                message: `Cannot book appointment with a ${doctor.isApproved} doctor. Only approved doctors can accept bookings.` 
+            });
+        }
+
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
